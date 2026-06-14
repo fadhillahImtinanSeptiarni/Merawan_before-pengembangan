@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikasi PHPL — Merawan (Hopea mengarawan)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f0e8;
+    color: #2c2a22;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: #3E6E52;
+    color: #fff;
+    padding: 20px 30px;
+  }
+  header h1 { font-size: 22px; font-weight: bold; }
+  header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+  /* NAV */
+  nav {
+    background: #2A4D3A;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 0 20px;
+  }
+  nav a {
+    color: #c8e6d4;
+    text-decoration: none;
+    padding: 10px 16px;
+    font-size: 13px;
+    display: block;
+  }
+  nav a:hover { background: #3E6E52; color: #fff; }
+  nav a.active { background: #fff; color: #2A4D3A; font-weight: bold; }
+
+  /* MAIN */
+  .container { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
+
+  h2 { font-size: 20px; color: #2A4D3A; margin-bottom: 6px; border-bottom: 2px solid #3E6E52; padding-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #7a6f58; margin-bottom: 20px; }
+
+  /* COVER / INFO */
+  .info-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .info-box h3 { color: #3E6E52; margin-bottom: 10px; font-size: 16px; }
+  .info-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .info-table td { padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 13px; vertical-align: top; }
+  .info-table td:first-child { width: 160px; font-weight: bold; color: #5a5040; }
+
+  /* PROGRESS BAR SEDERHANA */
+  .aspect-summary { margin-bottom: 24px; }
+  .asp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .asp-label { width: 200px; font-size: 13px; flex-shrink: 0; }
+  .asp-bar-wrap { flex: 1; background: #e0d8c4; height: 18px; border-radius: 3px; overflow: hidden; }
+  .asp-bar { height: 100%; background: #3E6E52; border-radius: 3px; }
+  .asp-pct { width: 48px; text-align: right; font-size: 13px; font-weight: bold; color: #2A4D3A; }
+  .overall-box {
+    background: #2A4D3A; color: #fff; border-radius: 6px;
+    padding: 14px 20px; margin-bottom: 24px; font-size: 15px;
+  }
+  .overall-box span { font-size: 28px; font-weight: bold; }
+
+  /* CHECKLIST */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .crit-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .crit-item .status {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; color: #fff; margin-top: 1px;
+  }
+  .status.terpenuhi { background: #3E6E52; }
+  .status.belum { background: #b7ac8e; color: #5a5040; }
+  .crit-item .crit-body { flex: 1; }
+  .crit-item .crit-text { font-size: 14px; color: #2c2a22; }
+  .crit-item .crit-note { font-size: 12px; color: #7a6f58; margin-top: 5px; border-left: 3px solid #8ED3F3; padding-left: 8px; }
+  .crit-item .crit-id { font-size: 11px; color: #aaa; flex-shrink: 0; padding-top: 4px; }
+
+  .result-banner {
+    background: #f0ead8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #5a5040;
+    margin-bottom: 16px;
+  }
+  .result-banner b { color: #2A4D3A; }
+
+  /* CAR TABLE */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; }
+  th, td { text-align: left; padding: 9px 10px; font-size: 13px; border-bottom: 1px solid #eee; vertical-align: top; }
+  th { background: #f0ead8; font-weight: bold; color: #5a5040; font-size: 12px; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; color: #fff; }
+  .badge.mayor { background: #C97B5A; }
+  .badge.minor { background: #E8B86D; color: #5a4317; }
+  .badge.open  { background: #b7ac8e; }
+  .badge.closed { background: #3E6E52; }
+
+  footer {
+    text-align: center; font-size: 12px; color: #9a8f6f;
+    padding: 20px; border-top: 1px solid #ddd; margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sistem Manajemen Sertifikasi PHPL — Merawan</h1>
+  <p>Hopea mengarawan Miq. · Dipterocarpaceae · Tugas UAS Take Home — Mata Kuliah Sertifikasi Hutan</p>
+</header>
+
+<nav id="mainNav">
+  <a href="#" class="active" onclick="showSection('cover', this)">Sampul</a>
+  <a href="#" onclick="showSection('dashboard', this)">Ringkasan</a>
+  <a href="#" onclick="showSection('prasyarat', this)">Prasyarat &amp; Legalitas</a>
+  <a href="#" onclick="showSection('produksi', this)">Produksi</a>
+  <a href="#" onclick="showSection('ekologi', this)">Ekologi</a>
+  <a href="#" onclick="showSection('sosial', this)">Sosial</a>
+  <a href="#" onclick="showSection('vlk', this)">VLK</a>
+  <a href="#" onclick="showSection('car', this)">Temuan &amp; CAR</a>
+</nav>
+
+<div class="container">
+
+  <!-- COVER -->
+  <div class="section active" id="sec-cover">
+    <h2>Sampul</h2>
+    <p class="subtitle">Buku kerja kesiapan sertifikasi Pengelolaan Hutan Produksi Lestari (PHPL) untuk unit pengelolaan kayu Merawan.</p>
+
+    <div class="info-box">
+      <h3>Identitas Jenis Kayu</h3>
+      <table class="info-table">
+        <tr><td>Nama Lokal</td><td>Merawan</td></tr>
+        <tr><td>Nama Ilmiah</td><td><i>Hopea mengarawan</i> Miq.</td></tr>
+        <tr><td>Famili</td><td>Dipterocarpaceae</td></tr>
+        <tr><td>Status IUCN</td><td>Vulnerable (Rentan)</td></tr>
+        <tr><td>Skema Sertifikasi</td><td>PHPL &amp; Verifikasi Legalitas Kayu (VLK)</td></tr>
+        <tr><td>Sebaran</td><td>Sumatra, Kalimantan, Semenanjung Malaya</td></tr>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <h3>Tentang Dokumen Ini</h3>
+      <p style="font-size:13.5px; color:#5a5440; line-height:1.75;">
+        Merawan (<i>Hopea mengarawan</i>) adalah pohon famili Dipterocarpaceae yang dapat tumbuh hingga lebih dari 40 meter,
+        ditemukan di hutan hujan campuran dataran rendah Sumatra, Kalimantan, dan Semenanjung Malaya.
+        Karena tergolong rentan akibat penebangan dan konversi lahan, pengelolaannya perlu mengikuti prinsip PHPL
+        agar kelestariannya terjaga sekaligus memenuhi syarat legalitas perdagangan.
+      </p>
+      <p style="margin-top:12px; font-size:13px; color:#7a6f58;">
+        Halaman ini menampilkan hasil penilaian kesiapan sertifikasi (data tetap/contoh untuk presentasi).
+        Gunakan menu di atas untuk membuka setiap aspek penilaian.
+      </p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="section" id="sec-dashboard">
+    <h2>Ringkasan Kesiapan Sertifikasi</h2>
+    <p class="subtitle">Rekapitulasi hasil penilaian per aspek PHPL dan VLK.</p>
+
+    <div class="overall-box">
+      Skor Kesiapan Keseluruhan: <span id="overall-score">—</span>
+    </div>
+
+    <div class="aspect-summary" id="asp-summary"></div>
+  </div>
+
+  <!-- PRASYARAT -->
+  <div class="section" id="sec-prasyarat">
+    <h2>Aspek Prasyarat &amp; Legalitas</h2>
+    <div class="result-banner" id="result-prasyarat"></div>
+    <p class="subtitle">Kelembagaan, perizinan, dan tata batas areal kerja unit pengelolaan Merawan.</p>
+    <div id="list-prasyarat"></div>
+  </div>
+
+  <!-- PRODUKSI -->
+  <div class="section" id="sec-produksi">
+    <h2>Aspek Produksi</h2>
+    <div class="result-banner" id="result-produksi"></div>
+    <p class="subtitle">Penataan areal kerja, realisasi panen kayu Merawan, dan penerapan teknik silvikultur.</p>
+    <div id="list-produksi"></div>
+  </div>
+
+  <!-- EKOLOGI -->
+  <div class="section" id="sec-ekologi">
+    <h2>Aspek Ekologi</h2>
+    <div class="result-banner" id="result-ekologi"></div>
+    <p class="subtitle">Perlindungan kawasan lindung, keanekaragaman hayati, dan pengelolaan dampak lingkungan.</p>
+    <div id="list-ekologi"></div>
+  </div>
+
+  <!-- SOSIAL -->
+  <div class="section" id="sec-sosial">
+    <h2>Aspek Sosial</h2>
+    <div class="result-banner" id="result-sosial"></div>
+    <p class="subtitle">Hak masyarakat sekitar hutan, kemitraan, penyelesaian konflik, dan hak tenaga kerja.</p>
+    <div id="list-sosial"></div>
+  </div>
+
+  <!-- VLK -->
+  <div class="section" id="sec-vlk">
+    <h2>Verifikasi Legalitas Kayu (VLK)</h2>
+    <div class="result-banner" id="result-vlk"></div>
+    <p class="subtitle">Ketertelusuran kayu Merawan dari tunggak hingga produk olahan dan kepatuhan administrasi.</p>
+    <div id="list-vlk"></div>
+  </div>
+
+  <!-- CAR TABLE -->
+  <div class="section" id="sec-car">
+    <h2>Temuan Audit &amp; CAR</h2>
+    <p class="subtitle">Rekapitulasi temuan ketidaksesuaian hasil audit beserta Corrective Action Request (CAR) dan status penyelesaian.</p>
+    <table>
+      <thead>
+        <tr><th>No</th><th>Aspek</th><th>Kategori</th><th>Uraian Temuan</th><th>Tindakan Korektif</th><th>Tenggat</th><th>Status</th></tr>
+      </thead>
+      <tbody id="car-body"></tbody>
+    </table>
+  </div>
+
+  <footer>Sistem Manajemen Sertifikasi PHPL &mdash; Merawan (<i>Hopea mengarawan</i>) &bull; Data untuk keperluan presentasi akademik</footer>
+
+</div>
+
+<script>
+/* ---- DATA ---- */
+const ASPECTS = {
+  prasyarat: { label:"Prasyarat & Legalitas", items:[
+    { text:"Izin Usaha Pemanfaatan Hasil Hutan Kayu (IUPHHK) untuk areal tegakan Merawan sah dan masih berlaku", done:true,  note:"SK IUPHHK-HA berlaku hingga 2034, terverifikasi pada audit awal." },
+    { text:"Rencana Kerja Usaha (RKU) dan Rencana Kerja Tahunan (RKT) telah disahkan", done:true,  note:"RKU periode 2021–2030 dan RKT 2026 telah disahkan oleh dinas terkait." },
+    { text:"Tata batas areal kerja jelas di lapangan dan tidak ada konflik batas", done:true,  note:"Tata batas temu gelang telah dilaksanakan, dipertegas dengan papan batas." },
+    { text:"Tenaga teknis bersertifikat (Ganis PHPL) tersedia sesuai kebutuhan", done:true,  note:"Tersedia Ganis Canhut, Nenhut, Binhut, dan PKB-R sesuai kebutuhan minimum." },
+    { text:"Visi, misi, dan tujuan pengelolaan lestari Merawan ditetapkan dan disosialisasikan", done:true,  note:"Visi-misi tertuang dalam RKU dan telah disosialisasikan kepada karyawan dan masyarakat sekitar." },
+  ]},
+  produksi: { label:"Produksi", items:[
+    { text:"Penataan areal kerja sesuai fungsi (blok tebangan, blok tanaman Merawan, kawasan lindung)", done:true,  note:"Peta kerja menunjukkan pembagian blok RKT, blok tanaman, dan kawasan lindung secara jelas." },
+    { text:"Realisasi produksi kayu Merawan tahun berjalan sesuai dengan rencana RKT", done:true,  note:"Realisasi produksi RKT 2025 tercapai 92% dari rencana volume tebangan." },
+    { text:"Penerapan teknik pemanenan ramah lingkungan (Reduced Impact Logging)", done:false, note:"Penerapan RIL belum konsisten di seluruh petak tebang; pelatihan operator chainsaw belum merata." },
+    { text:"Tingkat kerusakan tegakan tinggal akibat pemanenan terkendali", done:true,  note:"Hasil monitoring menunjukkan tingkat kerusakan tegakan tinggal di bawah ambang batas (≤15%)." },
+    { text:"Petak ukur permanen (PSP) untuk pengukuran riap tegakan Merawan terpelihara", done:true,  note:"PSP terpasang pada 4 klaster dan diukur secara periodik setiap tahun." },
+  ]},
+  ekologi: { label:"Ekologi", items:[
+    { text:"Kawasan lindung (sempadan sungai, KPPN, dll) di sekitar tegakan Merawan dikelola sesuai peruntukannya", done:true,  note:"Sempadan sungai dan KPPN telah ditata batas dan dipasang tanda." },
+    { text:"Identifikasi flora dan fauna dilindungi serta tindakan perlindungannya tersedia", done:false, note:"Daftar flora-fauna dilindungi tersedia, namun SOP penanganan perjumpaan satwa belum disahkan." },
+    { text:"Pengelolaan dan pemantauan dampak lingkungan (air, tanah, erosi) dilaksanakan", done:true,  note:"Pemantauan kualitas air sungai dilakukan setiap semester, hasil masih dalam baku mutu." },
+    { text:"Sistem pencegahan dan penanggulangan kebakaran hutan tersedia dan berfungsi", done:true,  note:"Tim RPK terbentuk, menara pantau dan peralatan tersedia." },
+    { text:"Pemantauan status konservasi Merawan (Vulnerable) dilakukan secara berkala", done:false, note:"Belum ada laporan pemantauan populasi pohon induk Merawan tahun terakhir." },
+  ]},
+  sosial: { label:"Sosial", items:[
+    { text:"Hak-hak masyarakat adat dan lokal di sekitar areal diidentifikasi dan diakui", done:true,  note:"Peta sosial dan identifikasi hak masyarakat sekitar telah disusun bersama tokoh desa." },
+    { text:"Persetujuan atas dasar informasi awal tanpa paksaan (PADIATAPA/FPIC) diterapkan", done:true,  note:"Konsultasi publik dan berita acara persetujuan tersedia untuk kegiatan RKT 2026." },
+    { text:"Program kemitraan dan pemberdayaan masyarakat sekitar areal Merawan berjalan", done:true,  note:"Program kemitraan kehutanan dan bantuan sarana ekonomi desa berjalan setiap tahun." },
+    { text:"Mekanisme penyelesaian konflik sosial terdokumentasi dan berfungsi", done:false, note:"SOP penyelesaian konflik sudah ada, namun belum diuji pada kasus nyata." },
+    { text:"Hak normatif tenaga kerja (K3, upah, kebebasan berserikat) terpenuhi", done:true,  note:"Upah sesuai UMK, APD tersedia, serikat pekerja terbentuk dan aktif." },
+  ]},
+  vlk: { label:"Legalitas Kayu (VLK)", items:[
+    { text:"Dokumen LHP dan SKSHHK untuk kayu Merawan lengkap dan sesuai realisasi produksi", done:true,  note:"LHP dan SKSHHK tersedia dan terinput pada SIPUHH untuk seluruh petak tebang." },
+    { text:"Sistem ketertelusuran (Chain of Custody) bahan baku hingga produk berjalan", done:true,  note:"Penandaan log dan catatan mutasi kayu dari TPK hutan ke TPK antara terdokumentasi." },
+    { text:"Pembayaran PSDH/DR dan PNBP sesuai dengan realisasi penebangan", done:true,  note:"Bukti pembayaran PSDH dan DR sesuai LHP tersedia dan dapat diverifikasi." },
+    { text:"Pemenuhan standar K3 dan pengelolaan lingkungan di unit pengolahan", done:true,  note:"Unit pengolahan memiliki dokumen lingkungan dan perlengkapan K3 sesuai standar." },
+    { text:"Dokumen V-Legal diterbitkan untuk produk Merawan yang akan diekspor", done:false, note:"Pengajuan V-Legal untuk batch ekspor terbaru masih dalam proses verifikasi LV-LK." },
+  ]},
+};
+
+const CARS = [
+  { id:1, aspect:"Produksi",  category:"minor", desc:"Penerapan Reduced Impact Logging (RIL) belum konsisten pada seluruh petak tebang RKT 2026.", action:"Melaksanakan pelatihan ulang operator chainsaw dan supervisi pelaksanaan RIL di lapangan.", deadline:"2026-09-30", status:"open" },
+  { id:2, aspect:"Ekologi",   category:"mayor", desc:"Belum tersedia SOP penanganan perjumpaan satwa dilindungi yang disahkan oleh manajemen.", action:"Menyusun dan mengesahkan SOP penanganan satwa dilindungi serta melakukan sosialisasi.", deadline:"2026-08-15", status:"open" },
+  { id:3, aspect:"Sosial",    category:"minor", desc:"Mekanisme penyelesaian konflik sosial belum pernah diuji melalui simulasi atau kasus nyata.", action:"Melakukan simulasi penyelesaian konflik bersama perwakilan masyarakat.", deadline:"2026-07-20", status:"closed" },
+  { id:4, aspect:"VLK",       category:"minor", desc:"Dokumen V-Legal untuk batch ekspor produk Merawan terbaru masih dalam proses verifikasi.", action:"Melengkapi data pendukung yang diminta LV-LK dan memantau proses penerbitan V-Legal.", deadline:"2026-07-05", status:"open" },
+  { id:5, aspect:"Ekologi",   category:"minor", desc:"Belum ada laporan pemantauan populasi pohon induk Merawan untuk tahun berjalan.", action:"Melaksanakan inventarisasi pohon induk Merawan dan menyusun laporan pemantauan tahunan.", deadline:"2026-10-01", status:"open" },
+];
+
+/* ---- RENDER CHECKLIST ---- */
+function pctOf(key){
+  const items = ASPECTS[key].items;
+  return Math.round(items.filter(r=>r.done).length / items.length * 100);
+}
+
+function renderChecklists(){
+  Object.entries(ASPECTS).forEach(([key, asp])=>{
+    const el = document.getElementById("list-"+key);
+    el.innerHTML = "";
+    asp.items.forEach((row, i)=>{
+      const div = document.createElement("div");
+      div.className = "crit-item";
+      div.innerHTML = `
+        <div class="status ${row.done?'terpenuhi':'belum'}">${row.done?'✓':'!'}</div>
+        <div class="crit-body">
+          <div class="crit-text">${row.text}</div>
+          <div class="crit-note">${row.note}</div>
+        </div>
+        <div class="crit-id">${key.toUpperCase()}-${String(i+1).padStart(2,"0")}</div>
+      `;
+      el.appendChild(div);
+    });
+    const done = asp.items.filter(r=>r.done).length;
+    document.getElementById("result-"+key).innerHTML =
+      `Hasil Penilaian: <b>${done}/${asp.items.length} kriteria terpenuhi (${pctOf(key)}%)</b>`;
+  });
+}
+
+/* ---- RENDER DASHBOARD ---- */
+function renderDashboard(){
+  const keys = Object.keys(ASPECTS);
+  const pcts = keys.map(pctOf);
+  const overall = Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length);
+  document.getElementById("overall-score").textContent = overall + "%";
+
+  const wrap = document.getElementById("asp-summary");
+  wrap.innerHTML = "";
+  keys.forEach((key, i)=>{
+    const row = document.createElement("div");
+    row.className = "asp-row";
+    row.innerHTML = `
+      <div class="asp-label">${ASPECTS[key].label}</div>
+      <div class="asp-bar-wrap"><div class="asp-bar" style="width:${pcts[i]}%"></div></div>
+      <div class="asp-pct">${pcts[i]}%</div>
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+/* ---- RENDER CAR ---- */
+function renderCars(){
+  const body = document.getElementById("car-body");
+  body.innerHTML = "";
+  CARS.forEach(c=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>CAR-${String(c.id).padStart(3,"0")}</td>
+      <td>${c.aspect}</td>
+      <td><span class="badge ${c.category}">${c.category}</span></td>
+      <td>${c.desc}</td>
+      <td>${c.action}</td>
+      <td>${c.deadline}</td>
+      <td><span class="badge ${c.status}">${c.status==="open"?"Terbuka":"Selesai"}</span></td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+/* ---- NAV ---- */
+function showSection(id, link){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("sec-"+id).classList.add("active");
+  document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
+  if(link) link.classList.add("active");
+  return false;
+}
+
+/* ---- INIT ---- */
+renderChecklists();
+renderDashboard();
+renderCars();
+</script>
+</body>
+</html>
